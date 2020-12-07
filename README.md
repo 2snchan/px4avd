@@ -5,7 +5,7 @@ Simple Setup Guide For PX4Avd
 Simple Obstacle Avoidance System Using RPLidar A2 and Pixhawk, ROS  
 Created By 이승찬, Korea Science Academy of KAIST 19th.  
 Developed Since 2020.10 ~  
-
+</br>
 ## Requirements   
 ### **Drone**  
 **FC** : Holybro Pixhawk 4 (FMUv4)  
@@ -21,11 +21,9 @@ I think using ubuntu server image can solve this problem.
 **Linux OS** : Ubuntu 18.04 LTS  
 I used Ubuntu Mate 18.04 armhf. ***Do not use arm64 version. Using 64-bit OS can cause library compile error.***  
 **LiDAR** : Slamtec RPLiDAR A2M8  
+</br>
 ## Hardware Setup
-
+</br>
 ## Software Environment Setup
-
+</br>
 ## Complie
-
-
-
