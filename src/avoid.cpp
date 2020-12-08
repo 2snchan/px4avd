@@ -26,10 +26,12 @@ void scan_cb(const sensor_msgs::LaserScan::ConstPtr& scan){
 
 		}
 	}
-	//float current_heading = get_current_heading();
-	//float deg2rad = (M_PI/180);
-	//avoidance_vector_x = avoidance_vector_x*cos((current_heading)*deg2rad) - avoidance_vector_y*sin((current_heading)*deg2rad);
-	//avoidance_vector_y = avoidance_vector_x*sin((current_heading)*deg2rad) + avoidance_vector_y*cos((current_heading)*deg2rad);
+	
+	float current_heading = get_current_heading();
+	float deg2rad = (M_PI/180);
+	
+	avoidance_vector_x = avoidance_vector_x*cos((current_heading)*deg2rad) - avoidance_vector_y*sin((current_heading)*deg2rad);
+	avoidance_vector_y = avoidance_vector_x*sin((current_heading)*deg2rad) + avoidance_vector_y*cos((current_heading)*deg2rad);
 
 	if(avoid)
 	{
@@ -38,11 +40,14 @@ void scan_cb(const sensor_msgs::LaserScan::ConstPtr& scan){
 			avoidance_vector_x = 3 * (avoidance_vector_x/sqrt(pow(avoidance_vector_x,2) + pow(avoidance_vector_y,2)));
 			avoidance_vector_y = 3 * (avoidance_vector_y/sqrt(pow(avoidance_vector_x,2) + pow(avoidance_vector_y,2)));
 		}
-		//geometry_msgs::Point current_pos;
-		//current_pos = get_current_location();
-		//set_destination(avoidance_vector_x + current_pos.x, avoidance_vector_y + current_pos.y, 2, 0);	
+
+		geometry_msgs::Point current_pos;
+		current_pos = get_current_location();
+		set_destination(avoidance_vector_x + current_pos.x, avoidance_vector_y + current_pos.y, 2, 0);	
+		
 		ROS_INFO("Vector X : %f Vector Y : %f",avoidance_vector_x,avoidance_vector_y);
 	}
+
 }
 
 int main(int argc, char **argv){
@@ -52,16 +57,18 @@ int main(int argc, char **argv){
     ros::Subscriber collision_sub = n.subscribe<sensor_msgs::LaserScan>("/scan", 1, scan_cb);
     init_publisher_subscriber(n);
 
-    // wait4connect();
-    // wait4start();
-    // initialize_local_frame();
+    wait4connect();
+    wait4start();
+    initialize_local_frame();
 
-    // takeoff(0.5);
+	float altitude = 0.5
 
-    // set_destination(0,0,0.5,0);
+    takeoff(altitude);
+    set_destination(0,0,altitude,0);
 
     ros::Rate rate(2.0);
     int counter = 0;
+
     while(ros::ok()){
         ros::spinOnce();
         rate.sleep();
