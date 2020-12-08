@@ -19,8 +19,11 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+
+#LiDAR Sensor Test Program
 add_executable(sensorscr src/sensor.cpp ${RPLIDAR_SDK_SRC})
 target_link_libraries(sensorscr ${catkin_LIBRARIES})
 
+#Avoidance Instance
 add_executable(testavoid src/avoid.cpp ${RPLIDAR_SDK_SRC})
 target_link_libraries(testavoid ${catkin_LIBRARIES})
